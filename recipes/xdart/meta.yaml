@@ -1,0 +1,72 @@
+{% set version = "0.35.1" %}
+
+package:
+  name: xdart
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/x/xdart/xdart-{{ version }}.tar.gz
+  sha256: e2f19d39c0293d82c242468a08c4cbe7f8b845ee6b5521abe335e3abae3199db
+
+build:
+  entry_points:
+    - xdart = xdart.xdart_main:main
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python {{ python_min }}
+    - setuptools >=64
+    - pip
+  run:
+    - python >={{ python_min }}
+    - ssrl_xrd_tools >=0.35.1
+    - numpy
+    - scipy
+    - h5py
+    - hdf5plugin
+    - fabio
+    - silx
+    - pyfai
+    - xrayutilities
+    - pyside6 >=6.5
+    - pyqtgraph >=0.13.7
+    - pandas
+    - lmfit
+    - pyyaml
+    - matplotlib-base
+    - joblib
+    - natsort
+    - imagecodecs
+    - imageio
+    - ipykernel
+
+test:
+  imports:
+    - xdart
+  commands:
+    - pip check
+  requires:
+    - pip
+    - python {{ python_min }}
+
+about:
+  home: https://github.com/v-thampy/xdart
+  summary: A pyFAI-based GUI for X-ray diffraction data reduction and visualization
+  description: |
+    xdart is a Qt desktop application for reducing and visualizing
+    area-detector X-ray diffraction data. It wraps pyFAI for azimuthal
+    integration, supports SPEC and NeXus scan formats including Eiger
+    master files, persists results as NeXus HDF5, and provides interactive
+    1D and 2D views with phase and strain analysis tools.
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  doc_url: https://github.com/v-thampy/xdart#readme
+  dev_url: https://github.com/v-thampy/xdart
+
+extra:
+  recipe-maintainers:
+    - v-thampy
